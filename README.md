@@ -1,6 +1,6 @@
 # Real Time ML Telemetry Pipeline
 
-Real Time ML Telemetry Pipeline is a high-performance, real-time observability engine for Machine Learning. Traditional tools like TensorBoard are built for post-training analysis. Omnistream acts as a live, 60-FPS "security camera" for your PyTorch models, streaming weights, activations, and gradients directly from the GPU to a hardware-accelerated dashboard—without choking your training loop.
+Real Time ML Telemetry Pipeline is a high-performance, real-time observability engine for Machine Learning. Traditional tools like TensorBoard are built for post-training analysis. Omnistream acts as a live, 60-FPS "security camera" for your PyTorch models, streaming weights, activations, and gradients directly from the GPU to a hardware-accelerated dashboard without choking your training loop.
 
 ## Features
 
