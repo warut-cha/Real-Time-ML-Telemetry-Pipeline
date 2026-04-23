@@ -75,3 +75,13 @@ Open a new terminal and execute the sample PyTorch training script (currently on
 pyton train_mnist.py #For CNN
 python train_gnn.py #For GNN
 ```
+
+### 5. Replay (Optional)
+Open a new terminal
+```bash
+# Windows
+./engine/build/Release/engine.exe --replay "baseline.omlog" --port 8082 --rport 8083 --mport 9091
+
+# Linux / Mac
+./engine/build/engine
+```
