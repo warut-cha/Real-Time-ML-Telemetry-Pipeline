@@ -1,0 +1,91 @@
+// OmniStream ML — canonical wire format (Phase 4 extension).
+//
+// Generate C++ bindings:
+//   flatc --cpp -o engine/generated schema/training_event.fbs
+//
+// Generate Python bindings:
+//   flatc --python -o trainer/generated schema/training_event.fbs
+
+namespace omnistream;
+
+// ── Phase 2 baseline (unchanged — existing emitters keep working) ─────────
+
+/// One training step emitted by the PyTorch hook.
+table TrainingEvent {
+    step:         uint32;
+    loss:         float32;
+    accuracy:     float32;
+    grad_norm:    float32;
+    timestamp_ns: uint64;
+}
+
+// ── Phase 4 extensions ────────────────────────────────────────────────────
+
+/// Extended scalar event — adds epoch and learning_rate.
+/// Emitted by train_mnist_v2.py; older emitters still send TrainingEvent.
+table TrainingEventV2 {
+    step:          uint32;
+    loss:          float32;
+    accuracy:      float32;
+    grad_norm:     float32;
+    timestamp_ns:  uint64;
+    epoch:         uint32;
+    learning_rate: float32;
+}
+
+/// Which kind of tensor is being snapshotted.
+enum TensorType : byte {
+    ACTIVATION     = 0,
+    WEIGHT         = 1,
+    GRADIENT       = 2,
+    NODE_EMBEDDING = 3,
+}
+
+/// Sampled activation / weight / gradient snapshot for a named layer.
+/// Emitted every N steps (configurable); values[] is a flattened tensor.
+/// Reader reconstructs shape from shape[] before rendering the heatmap.
+table TensorSnapshot {
+    step:         uint32;
+    layer_name:   string;
+    tensor_type:  TensorType;
+    shape:        [uint32];
+    values:       [float32];
+    sample_rate:  float32;
+    timestamp_ns: uint64;
+}
+
+/// Which class of anomaly was detected.
+enum AnomalyType : byte {
+    GRAD_EXPLOSION = 0,
+    LOSS_PLATEAU   = 1,
+    LOSS_SPIKE     = 2,
+}
+
+/// Written to the sidecar log when an anomaly is detected.
+/// The chapter index is built by scanning for these records at replay open.
+table AnomalyMarker {
+    step:         uint32;
+    anomaly_type: AnomalyType;
+    severity:     float32;
+    metric_value: float32;
+    threshold:    float32;
+    description:  string;
+    timestamp_ns: uint64;
+}
+
+/// Union — one LogEntry wraps exactly one record type.
+union EventRecord {
+    TrainingEvent,
+    TrainingEventV2,
+    TensorSnapshot,
+    AnomalyMarker,
+}
+
+/// Root table written to the Phase 4 union log (training_v4.omlog2).
+/// The Phase 3 fixed-record log (training.omlog) is still written in parallel
+/// for backward compatibility with the replay engine's O(1) seek path.
+table LogEntry {
+    event: EventRecord;
+}
+
+root_type TrainingEvent;

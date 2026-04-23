@@ -1,0 +1,31 @@
+# C++ Build & Output
+engine/build/
+engine/out/
+engine/CMakeCache.txt
+CMakeFiles/
+*.exe
+*.obj
+*.dll
+*.so
+*.dylib
+
+# AI Data & Tapes
+*.omlog
+*.bin
+*.pth
+*.pt
+data/
+datasets/
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+env/
+
+# Node / React
+node_modules/
+dist/
+build/
+.npm
