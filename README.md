@@ -17,7 +17,7 @@ The telemetry operates on a decoupled, 3-tier Producer-Consumer architecture:
 
 1. **The PyTorch Hook (`hook.py`):** Sits inside the training loop. Captures telemetry and tensor snapshots, serializes them via a custom binary format, and fires them over a non-blocking ZMQ socket.
 2. **The C++ Engine (`engine/`):** The high-speed middleman. Ingests the ZMQ stream, writes tapes to disk via `mmap`, and broadcasts state to the frontend via a `cpp-httplib` WebSocket server.
-3. **The React Dashboard (`ui/`):** A frontend "game engine" that buffers incoming WebSocket traffic to prevent React state firehoses, rendering the neural network topology cleanly using High-DPI Canvas math.
+3. **The React Dashboard (`ui/`):** A frontend that buffers incoming WebSocket traffic to prevent React state firehoses, rendering the neural network topology cleanly using High-DPI Canvas math.
 
 ---
 
