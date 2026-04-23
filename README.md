@@ -1,8 +1,6 @@
 # Real Time ML Telemetry Pipeline
 
-# Omnistream ML: Real-Time Neural Network Observability
-
-Omnistream is a high-performance, real-time observability engine for Machine Learning. Traditional tools like TensorBoard are built for post-training analysis. Omnistream acts as a live, 60-FPS "security camera" for your PyTorch models, streaming weights, activations, and gradients directly from the GPU to a hardware-accelerated dashboard—without choking your training loop.
+Real Time ML Telemetry Pipeline is a high-performance, real-time observability engine for Machine Learning. Traditional tools like TensorBoard are built for post-training analysis. Omnistream acts as a live, 60-FPS "security camera" for your PyTorch models, streaming weights, activations, and gradients directly from the GPU to a hardware-accelerated dashboard—without choking your training loop.
 
 ## Features
 
@@ -15,7 +13,7 @@ Omnistream is a high-performance, real-time observability engine for Machine Lea
 
 ##  Architecture Overview
 
-Omnistream operates on a decoupled, 3-tier Producer-Consumer architecture:
+The telemetry operates on a decoupled, 3-tier Producer-Consumer architecture:
 
 1. **The PyTorch Hook (`hook.py`):** Sits inside the training loop. Captures telemetry and tensor snapshots, serializes them via a custom binary format, and fires them over a non-blocking ZMQ socket.
 2. **The C++ Engine (`engine/`):** The high-speed middleman. Ingests the ZMQ stream, writes tapes to disk via `mmap`, and broadcasts state to the frontend via a `cpp-httplib` WebSocket server.
