@@ -67,7 +67,7 @@ cd ui
 npm install
 npm run dev
 ```
-Open your browser to (`http://localhost:5173`)
+Open your browser to (`http://localhost:3000`)
 
 ### 4. Run the Traning Script
 Open a new terminal and execute the sample PyTorch training script (currently only CNN and GNN is avaiable). The hook will automatically connect to C++ engine.
