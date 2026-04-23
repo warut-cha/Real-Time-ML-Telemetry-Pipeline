@@ -7,7 +7,7 @@ Real Time ML Telemetry Pipeline is a high-performance, real-time observability e
 * **Sub-Millisecond Latency:** Bypasses slow HTTP requests by utilizing **ZeroMQ** for a non-blocking, asynchronous pipeline.
 * **Zero Training Penalty:** PyTorch forward hooks utilize "batch slicers" and step-throttles to extract micro-samples, dropping telemetry latency from 2500ms down to ~100ms per step.
 * **Hardware-Level Memory Mapping:** The C++ backend uses OS-level `mmap` to write live training "tapes" directly to disk, allowing for zero-downtime hot-swapping and historical rewinding.
-* **60+ FPS Canvas Engine:** The React frontend abandons standard DOM/SVG rendering in favor of an Immediate-Mode HTML5 Canvas engine, visualizing thousands of edges and neurons at native monitor refresh rates.
+* **60+ FPS Canvas Engine:** HTML5 Canvas engine, visualizing thousands of edges and neurons at native monitor refresh rates.
 
 ---
 
